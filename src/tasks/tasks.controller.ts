@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { TasksService } from './tasks.service.js';
+import { AddTaskDto } from './DTO/addTask.dto.js';
 
 @Controller('tasks')
 export class TasksController {
@@ -40,7 +41,8 @@ export class TasksController {
   }
 
   @Post('add')
-  addNewTask(@Body() corps) {
+  addNewTask(@Body() corps: AddTaskDto) {
+    console.log(corps instanceof AddTaskDto);
     let res = this.taskSer.addNewTask(corps);
     return { message: 'Task added Successfully', tabTasks: res };
   }
