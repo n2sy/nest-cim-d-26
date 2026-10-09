@@ -27,15 +27,50 @@ export class TasksService {
     },
   ];
 
-  getNbTasks(y1, y2) {}
+  getNbTasks(y1, y2) {
+    return this.allTasks.filter((task) => task.year >= y1 && task.year <= y2);
+  }
 
-  getAllTasks() {}
+  getAllTasks() {
+    return this.allTasks;
+  }
 
-  getTaskById(taskId) {}
+  getTaskById(taskId) {
+    let selectedTask = this.allTasks.find((task) => task.id == taskId);
+    if (!selectedTask) {
+      throw new NotFoundException(`Task with id ${taskId} not found`);
+    }
+  }
 
-  addNewTask(task) {}
+  addNewTask(task) {
+    let newTask = new Task(
+      crypto.randomUUID(),
+      task.title,
+      task.year,
+      task.status,
+      new Date(),
+    );
+    this.allTasks.push(newTask);
+    return this.allTasks;
+  }
 
-  updateTask(taskId, uTask) {}
+  updateTask(taskId, uTask) {
+    let i = this.allTasks.findIndex((task) => task.id == taskId);
+    this.allTasks[i] = {
+      id: taskId,
+      //   title: uTask.title,
+      //   year: uTask.year,
+      //   status: uTask.status,
+      ...uTask,
+      createdAt: this.allTasks[i].createdAt,
+    };
+    return this.allTasks;
+  }
 
-  deleteTask(taskId) {}
+  deleteTask(taskId) {
+    let i = this.allTasks.findIndex((task) => task.id == taskId);
+
+    this.allTasks.splice(i, 1);
+    return this.allTasks;
+  }
 }
