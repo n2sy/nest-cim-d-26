@@ -3,7 +3,8 @@ import { TasksController } from './tasks.controller.js';
 import { TasksService } from './tasks.service.js';
 
 @Module({
+  imports: [],
   controllers: [TasksController],
-  providers: [TasksService]
+  providers: [TasksService],
 })
 export class TasksModule {}
